@@ -3,16 +3,16 @@
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " adjust screen on cursor moving
-nmap n nzz
-nmap N Nzz
-nmap * *zz
-nmap # #zz
-nmap g* g*zz
-nmap g# g#zz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " like PgDn/PgUp moving
-nnoremap H :cal Hcontext() <CR>
-nnoremap L :cal Lcontext() <CR>
+nnoremap <silent> H :cal Hcontext() <CR>
+nnoremap <silent> L :cal Lcontext() <CR>
 
 " setting for cursor moving like emacs on command mode
 cnoremap <c-f> <right>
@@ -22,11 +22,20 @@ cnoremap <c-d> <del>
 cnoremap <c-e> <end>
 
 " word based search
-nmap 1/ /\<\><Left><Left>
+nnoremap <silent> 1/ /\<\><Left><Left>
 
 " switch buffer
 nnoremap <silent> <C-n> :bn<CR>
 nnoremap <silent> <C-p> :bp<CR>
+
+" toggle) pseudo ScrollLock and some key-bindings for browsing one handed
+nnoremap <silent> 1j :let &scrolloff=999-&scrolloff<CR>
+nnoremap <silent> <expr> u &scrolloff>=999 ? "<C-u>" : "u"
+nnoremap <silent> <expr> d &scrolloff>=999 ? "<C-d>" : "d"
+nnoremap <silent> <expr> f &scrolloff>=999 ? "<C-f>" : "f"
+nnoremap <silent> <expr> b &scrolloff>=999 ? "<C-b>" : "b"
+nnoremap <silent> <expr> <Space> &scrolloff>=999 ? "<C-f>" : "<Space>"
+nnoremap <silent> <expr> q &scrolloff>=999 ? ":let &scrolloff=0<CR>" : "q"
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " setting for built-in configuration
@@ -65,10 +74,16 @@ set completeopt=menuone,preview
 " spell
 syntax on
 set spell
+syntax cluster comment contains=@Spell
 
 "list
 set list
 set listchars=tab:>-,trail:-,extends:>
+
+" and show invisible characters
+syntax match InvisibleJISX0208Space "　" display containedin=ALL
+syntax match InvisibleTrailedSpace "[ \t]\+$" display containedin=ALL
+syntax match InvisibleTab "\t" display containedin=ALL
 
 " search
 set incsearch
@@ -79,9 +94,6 @@ set hlsearch
 " status
 set statusline=%F%m%r%h%w\ -\ [%l,%v]%=\|\ %{&ff},\ %{&fileencoding},\ %Y\ \|
 set laststatus=2
-
-" color scheme
-"colorscheme midori
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " Setting for plugin
@@ -115,12 +127,6 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " ruby
-autocmd filetype ruby  set tabstop=2 | set shiftwidth=2
-autocmd filetype perl  set tabstop=2 | set shiftwidth=2
-autocmd filetype perl  set tabstop=2 | set shiftwidth=2
-autocmd filetype js  set tabstop=2 | set shiftwidth=2
-
-" js
 autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -215,6 +221,13 @@ if exists('&ambiwidth')
 endif
 
 
+" ime setting
+if has('multi_byte_ime')
+  set iminsert=1
+  set imsearch=1
+  inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+endif
+
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 "" neovundle
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -281,6 +294,13 @@ NeoBundle 'git://github.com/vim-scripts/jQuery.git'
 NeoBundle 'git://github.com/jelera/vim-javascript-syntax.git'
 NeoBundle 'git://github.com/teramako/jscomplete-vim.git'
 NeoBundle 'git://github.com/scrooloose/syntastic'
- 
+NeoBundle 'git://github.com/scrooloose/nerdtree'
+NeoBundle 'git://github.com/t02uk/midori'
+
 filetype plugin on
 filetype indent on
+
+" color scheme
+colorscheme midori
+" prevent from destroying my vimrc by example_vimrc*
+let g:no_gvimrc_example = 1
