@@ -49,7 +49,7 @@ set tabstop=4
 set shiftwidth=4
 set showmatch
 " set expandtab
-set numberwidth=8
+set numberwidth=6
 set autoindent
 set backspace=2
 set wrapscan
@@ -92,9 +92,15 @@ set smartcase
 set hlsearch
 
 " status
-set statusline=%F%m%r%h%w\ -\ [%l,%v]%=\|\ %{&ff},\ %{&fileencoding},\ %Y\ \|
+set statusline=#%n\ %f%m%r%h%w\ -\ [%l,\%v\ /\ %L,%{strlen(getline(\'.\'))}]%=\|%{&ff},\ %{&fileencoding},\ %Y\ 
+
 set laststatus=2
 
+" split
+set splitbelow
+
+" color
+set t_Co=65536
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " Setting for plugin
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -121,6 +127,9 @@ let g:syntastic_javascript_jslint_conf = "--white --undef --nomen --regexp --plu
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['ruby', 'javascript'],
                            \ 'passive_filetypes': [] }
+
+" quick run
+let g:quickrun_config={'*': {'split': ''}}
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " file type based setting
@@ -252,6 +261,8 @@ else
     noremap <Space>p "+p
 endif
 
+nnoremap <C-t>t :NERDTreeToggle<CR>
+nnoremap g: :e ./**/
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 "" neovundle
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -262,40 +273,37 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
   call neobundle#rc(expand('~/.vim/bundle'))
 endif
- 
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
+
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
+NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/vimproc.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
-NeoBundle 'git://github.com/tpope/vim-surround.git'
-NeoBundle 'git://github.com/tpope/vim-repeat.git'
-NeoBundle 'git://github.com/ujihisa/unite-colorscheme.git'
-NeoBundle 'git://github.com/ujihisa/vimshell-ssh.git'
 NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
-NeoBundle 'git://github.com/kana/vim-smartchr.git'
-NeoBundle 'git://github.com/mattn/zencoding-vim.git'
-NeoBundle 'git://github.com/mattn/gist-vim.git'
-NeoBundle 'git://github.com/mattn/webapi-vim.git'
-NeoBundle 'git://github.com/Lokaltog/vim-easymotion.git'
-NeoBundle 'git://github.com/hail2u/vim-css3-syntax.git'
 NeoBundle 'git://github.com/cakebaker/scss-syntax.vim.git'
-NeoBundle 'git://github.com/jpo/vim-railscasts-theme.git'
-NeoBundle 'git://github.com/thinca/vim-quickrun.git'
 NeoBundle 'git://github.com/dag/vim2hs.git'
 NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
-NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
 NeoBundle 'git://github.com/eagletmt/unite-haddock.git'
-NeoBundle 'git://github.com/t02uk/tabdetect.git'
-NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
-NeoBundle 'git://github.com/vim-scripts/jQuery.git'
+NeoBundle 'git://github.com/hail2u/vim-css3-syntax.git'
 NeoBundle 'git://github.com/jelera/vim-javascript-syntax.git'
-NeoBundle 'git://github.com/teramako/jscomplete-vim.git'
-NeoBundle 'git://github.com/scrooloose/syntastic'
+NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
+NeoBundle 'git://github.com/jpo/vim-railscasts-theme.git'
+NeoBundle 'git://github.com/kana/vim-smartchr.git'
+NeoBundle 'git://github.com/mattn/gist-vim.git'
+NeoBundle 'git://github.com/mattn/zencoding-vim.git'
 NeoBundle 'git://github.com/scrooloose/nerdtree'
+NeoBundle 'git://github.com/scrooloose/syntastic'
 NeoBundle 'git://github.com/t02uk/midori'
+NeoBundle 'git://github.com/t02uk/tabdetect.git'
+NeoBundle 'git://github.com/teramako/jscomplete-vim.git'
+NeoBundle 'git://github.com/thinca/vim-quickrun.git'
+NeoBundle 'git://github.com/tpope/vim-rails.git'
+NeoBundle 'git://github.com/tpope/vim-repeat.git'
+NeoBundle 'git://github.com/tpope/vim-surround.git'
+NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
+NeoBundle 'git://github.com/ujihisa/vimshell-ssh.git'
+NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
+NeoBundle 'git://github.com/vim-scripts/jQuery.git'
+NeoBundle 'git://github.com/tpope/vim-fugitive'
 
 filetype plugin on
 filetype indent on

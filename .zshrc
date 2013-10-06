@@ -22,7 +22,8 @@ precmd() {
     LANG=en_US.UTF-8 vcs_info
     psvar[1]=$vcs_info_msg_0_
 }
-PROMPT=$'%2F%n@%m%f %3F%~%f%1v\n%# '
+#PROMPT=$'%2F%n@%m%f %3F%~%f%1v \n%# '
+PROMPT=$'%2F%n@%m%f🐱 %3F%~%f%1v \n%# '
 
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -44,13 +45,14 @@ setopt share_history
 
 
 ## automatic atatch
-screen -q -ls
-if [ $? -eq 9 ]; then 
-    screen  
-else
-    screen -x
-fi
+#screen -q -ls
+#if [ $? -eq 9 ]; then 
+#    screen  
+#else
+#    screen -x
+#fi
 
 ## aliases
 alias ls='ls -G'
 alias ll='ls -Gla'
+
