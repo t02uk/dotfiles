@@ -10,10 +10,6 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" like PgDn/PgUp moving
-nnoremap <silent> H :cal Hcontext() <CR>
-nnoremap <silent> L :cal Lcontext() <CR>
-
 " setting for cursor moving like emacs on command mode
 cnoremap <c-f> <right>
 cnoremap <c-b> <left>
@@ -48,7 +44,7 @@ set nocompatible
 set tabstop=4
 set shiftwidth=4
 set showmatch
-" set expandtab
+set expandtab
 set numberwidth=6
 set autoindent
 set backspace=2
@@ -114,9 +110,6 @@ let c_minlines = 1000
 let g:explVertical=1
 let g:explSplitRight=1
 
-" leader
-" let mapleader = " "
-
 " simple js indenter
 let g:SimpleJsIndenter_CaseIndentLevel = -1
 let g:SimpleJsIndenter_BriefMode = 1
@@ -145,26 +138,6 @@ nnoremap g: :e ./**/
 autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 " coffee
 au BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
-
-" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-" tiny but usefull functions
-" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-" extend normal mode HL
-func! Hcontext() 
-    if (winline() == 1 && line(".") != 1) 
-        exe "normal! \<pageup>H" 
-    else 
-        exe "normal! H" 
-    endif 
-endfunc 
-
-func! Lcontext() 
-    if (winline() == winheight(0) && line(".") != line("$")) 
-        exe "normal! \<pagedown>L" 
-    else 
-        exe "normal! L" 
-    endif 
-endfunc
 
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
