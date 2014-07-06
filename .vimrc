@@ -99,6 +99,9 @@ set t_Co=65536
 " enable project depending vimrc
 set exrc
 set secure
+
+" isfname (remove equal sign)
+set isfname=@,48-57,/,.,-,_,+,,,#,$,%,~
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " Setting for plugin
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
