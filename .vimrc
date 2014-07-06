@@ -148,7 +148,6 @@ func! Hcontext()
     else 
         exe "normal! H" 
     endif 
-    echo '' 
 endfunc 
 
 func! Lcontext() 
@@ -157,7 +156,6 @@ func! Lcontext()
     else 
         exe "normal! L" 
     endif 
-    echo '' 
 endfunc
 
 
