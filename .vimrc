@@ -261,7 +261,6 @@ let g:no_gvimrc_example = 1
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 "" Spell
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-set spelllang=en,cjk
 fun! s:SpellConf()
   redir! => syntax
   silent syntax
@@ -269,11 +268,13 @@ fun! s:SpellConf()
 
   set spell
 
-  if syntax =~? '\<comment\>'
+  if syntax =~? '/<comment\>'
     syntax spell default
+    syntax match SpellNotAscii /\<\A\+\>/ contains=@NoSpell transparent containedin=Comment contained-
     syntax match SpellMaybeCode /\<\h\l*[_A-Z]\h\{-}\>/ contains=@NoSpell transparent containedin=Comment contained
   else
     syntax spell toplevel
+    syntax match SpellNotAscii /\<\A\+\>/ contains=@NoSpell transparent
     syntax match SpellMaybeCode /\<\h\l*[_A-Z]\h\{-}\>/ contains=@NoSpell transparent
   endif
 
@@ -284,7 +285,6 @@ augroup spell_check
   autocmd!
   autocmd BufReadPost,BufNewFile,Syntax * call s:SpellConf()
 augroup END
-
 
 
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
