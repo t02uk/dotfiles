@@ -73,15 +73,13 @@ set completeopt=menuone,preview
 
 " spell
 syntax on
-set spell
-syntax cluster comment contains=@Spell
 
 "list
 set list
 set listchars=tab:>-,trail:-,extends:>
 
 " and show invisible characters
-syntax match InvisibleJISX0208Space "　" display containedin=ALL
+syntax match InvisibleJISX0208Space "?@" display containedin=ALL
 syntax match InvisibleTrailedSpace "[ \t]\+$" display containedin=ALL
 syntax match InvisibleTab "\t" display containedin=ALL
 
@@ -93,14 +91,18 @@ set hlsearch
 
 " status
 set statusline=#%n\ %f%m%r%h%w\ -\ [%l,\%v\ /\ %L,%{strlen(getline(\'.\'))}]%=\|%{&ff},\ %{&fileencoding},\ %Y\ 
-
 set laststatus=2
+set history=65536
 
 " split
 set splitbelow
 
-" color
+" color (available?)
 set t_Co=65536
+
+" enable project depending vimrc
+set exrc
+set secure
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " Setting for plugin
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -131,12 +133,18 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 " quick run
 let g:quickrun_config={'*': {'split': ''}}
 
+" NERDTree
+nnoremap <C-t>t :NERDTreeToggle<CR>
+let g:NERDTreeDirArrows = 0
+nnoremap g: :e ./**/
+
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " file type based setting
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 " ruby
 autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+" coffee
+au BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " tiny but usefull functions
@@ -159,74 +167,22 @@ func! Lcontext()
 endfunc
 
 
-" word count
-function! s:CountChar(first, last)
-  let i = a:first
-  let sum = 0
-  while i <= a:last
-    "echo "line: " . i
-    let sum = sum + strlen(substitute(getline(i), '.', ' ', 'g'))
-    let i = i + 1
-  endwhile
-  return sum
-endfunction
-command! -range=% CountChar :echo "Count of characters: " . <SID>CountChar(<line1>, <line2>)
-command! -range=% CC :echo "Count of characters: " . <SID>CountChar(<line1>, <line2>)
-
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+" built-in plug-in
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+source $VIMRUNTIME/macros/matchit.vim
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " char code
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if &encoding !=# 'utf-8'
-  set encoding=japan
-  set fileencoding=japan
-endif
-if has('iconv')
-  let s:enc_euc = 'euc-jp'
-  let s:enc_jis = 'iso-2022-jp'
-  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'eucjp-ms'
-    let s:enc_jis = 'iso-2022-jp-3'
-  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'euc-jisx0213'
-    let s:enc_jis = 'iso-2022-jp-3'
-  endif
-  if &encoding ==# 'utf-8'
-    let s:fileencodings_default = &fileencodings
-    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
-    unlet s:fileencodings_default
-  else
-    let &fileencodings = &fileencodings .','. s:enc_jis
-    set fileencodings+=utf-8,ucs-2le,ucs-2
-    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-      set fileencodings+=cp932
-      set fileencodings-=euc-jp
-      set fileencodings-=euc-jisx0213
-      set fileencodings-=eucjp-ms
-      let &encoding = s:enc_euc
-      let &fileencoding = s:enc_euc
-    else
-      let &fileencodings = &fileencodings .','. s:enc_euc
-    endif
-  endif
-  unlet s:enc_euc
-  unlet s:enc_jis
-endif
-if has('autocmd')
-  function! AU_ReCheck_FENC()
-    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-      let &fileencoding=&encoding
-    endif
-  endfunction
-  autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
+set encoding=utf-8
+set fileencodings=utf-8,cp-932,euc-jp
+set fileencoding=utf-8
 set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
-
 
 " ime setting
 if has('multi_byte_ime')
@@ -236,7 +192,7 @@ if has('multi_byte_ime')
 endif
 
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-"" neovundle
+"" clipboard
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " reference
 " http://subtech.g.hatena.ne.jp/cho45/20061010/1160459376
@@ -247,6 +203,7 @@ endif
 " export __CF_USER_TEXT_ENCODING='0x1F5:0x08000100:14'
 "
 " Vim(Mac)
+
 "if ('mac') && !has('gui')
 if !has('gui')
     nnoremap <silent> <Space>y :.w !pbcopy<CR><CR>
@@ -259,10 +216,8 @@ else
     noremap <Space>p "+p
 endif
 
-nnoremap <C-t>t :NERDTreeToggle<CR>
-nnoremap g: :e ./**/
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-"" neovundle
+"" neobundle
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 set nocompatible
 filetype off
@@ -274,9 +229,15 @@ endif
 
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
-NeoBundle 'git://github.com/Shougo/vimproc.git'
-NeoBundle 'git://github.com/Shougo/vimshell.git'
-NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+NeoBundle 'git://github.com/Shougo/vimshell.vim.git'
 NeoBundle 'git://github.com/cakebaker/scss-syntax.vim.git'
 NeoBundle 'git://github.com/dag/vim2hs.git'
 NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
@@ -286,8 +247,6 @@ NeoBundle 'git://github.com/jelera/vim-javascript-syntax.git'
 NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
 NeoBundle 'git://github.com/jpo/vim-railscasts-theme.git'
 NeoBundle 'git://github.com/kana/vim-smartchr.git'
-NeoBundle 'git://github.com/mattn/gist-vim.git'
-NeoBundle 'git://github.com/mattn/zencoding-vim.git'
 NeoBundle 'git://github.com/scrooloose/nerdtree'
 NeoBundle 'git://github.com/scrooloose/syntastic'
 NeoBundle 'git://github.com/t02uk/midori'
@@ -298,10 +257,24 @@ NeoBundle 'git://github.com/tpope/vim-rails.git'
 NeoBundle 'git://github.com/tpope/vim-repeat.git'
 NeoBundle 'git://github.com/tpope/vim-surround.git'
 NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
-NeoBundle 'git://github.com/ujihisa/vimshell-ssh.git'
 NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
 NeoBundle 'git://github.com/vim-scripts/jQuery.git'
 NeoBundle 'git://github.com/tpope/vim-fugitive'
+NeoBundle 'git://github.com/vim-scripts/renamer.vim.git'
+NeoBundle 'git://github.com/tpope/vim-dispatch.git'
+NeoBundle 'git://github.com/thoughtbot/vim-rspec.git'
+NeoBundle 'git://github.com/othree/html5.vim.git'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/ujihisa/unite-locate.git'
+NeoBundle 'git://github.com/koron/codic-vim.git'
+NeoBundle 'git://github.com/rhysd/unite-codic.vim.git'
+NeoBundle 'git://github.com/vim-scripts/DirDiff.vim.git'
+NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
+NeoBundle 'git://github.com/thinca/vim-ref'
+NeoBundle 'git://github.com/taka84u9/vim-ref-ri'
+NeoBundle 'git://github.com/gregsexton/gitv.git'
+
+let g:rspec_command = "Dispatch rspec {spec}"
 
 filetype plugin on
 filetype indent on
@@ -310,3 +283,42 @@ filetype indent on
 colorscheme midori
 " prevent from destroying my vimrc by example_vimrc*
 let g:no_gvimrc_example = 1
+
+
+"" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+"" Spell
+"" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+set spelllang=en,cjk
+fun! s:SpellConf()
+  redir! => syntax
+  silent syntax
+  redir END
+
+  set spell
+
+  if syntax =~? '\<comment\>'
+    syntax spell default
+    syntax match SpellMaybeCode /\<\h\l*[_A-Z]\h\{-}\>/ contains=@NoSpell transparent containedin=Comment contained
+  else
+    syntax spell toplevel
+    syntax match SpellMaybeCode /\<\h\l*[_A-Z]\h\{-}\>/ contains=@NoSpell transparent
+  endif
+
+  syntax cluster Spell add=SpellNotAscii,SpellMaybeCode
+endfunc
+
+augroup spell_check
+  autocmd!
+  autocmd BufReadPost,BufNewFile,Syntax * call s:SpellConf()
+augroup END
+
+
+
+"" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+"" Et
+"" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+"" restore the cursor position when file activated
+au BufReadPost *
+     \ if line("'\"") > 1 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
