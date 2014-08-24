@@ -134,6 +134,10 @@ nnoremap <C-t>t :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows = 0
 nnoremap g: :e ./**/
 
+" vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " file type based setting
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,7 +145,8 @@ nnoremap g: :e ./**/
 autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 " coffee
 au BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
-
+" gitv
+autocmd FileType git :setlocal foldlevel=99
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " built-in plug-in
@@ -249,6 +254,7 @@ NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
 NeoBundle 'git://github.com/thinca/vim-ref'
 NeoBundle 'git://github.com/taka84u9/vim-ref-ri'
 NeoBundle 'git://github.com/gregsexton/gitv.git'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 let g:rspec_command = "Dispatch rspec {spec}"
 
@@ -273,7 +279,7 @@ fun! s:SpellConf()
 
   if syntax =~? '/<comment\>'
     syntax spell default
-    syntax match SpellNotAscii /\<\A\+\>/ contains=@NoSpell transparent containedin=Comment contained-
+    syntax match SpellNotAscii /\<\A\+\>/ contains=@NoSpell transparent containedin=Comment contained
     syntax match SpellMaybeCode /\<\h\l*[_A-Z]\h\{-}\>/ contains=@NoSpell transparent containedin=Comment contained
   else
     syntax spell toplevel
