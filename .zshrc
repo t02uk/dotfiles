@@ -50,5 +50,33 @@ alias zp="tmux capture-pane -S -10000\; show-buffer | vim +10000 -Rc 'set ft=vim
 
 function man() { /usr/bin/man $* -P "col -b | vim -Rc 'setl ft=man ts=8 nomod nolist nonu' -c 'nmap q :q<cr>' -" }
 
-### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# Peco
+function peco-select-history() {
+  typeset tac
+  if which tac > /dev/null; then
+    tac=tac
+  else
+    tac='tail -r'
+  fi
+  BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle -R -c
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+# process kill
+function peco-pkill() {
+  for pid in `ps aux | peco | awk '{ print $2 }'`
+  do
+    kill $pid
+    echo "Killed ${pid}"
+  done
+}
+alias pps="peco-pkill"
+
+# rake
+peco-rake() { local task=$(rake -vT | peco | cut -d " " -f 2); rake $task }
+alias prake='peco-rake'
