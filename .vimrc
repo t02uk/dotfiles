@@ -75,7 +75,7 @@ set list
 set listchars=tab:>-,trail:-,extends:>
 
 " and show invisible characters
-syntax match InvisibleJISX0208Space "?@" display containedin=ALL
+syntax match InvisibleJISX0208Space "　" display containedin=ALL
 syntax match InvisibleTrailedSpace "[ \t]\+$" display containedin=ALL
 syntax match InvisibleTab "\t" display containedin=ALL
 
@@ -88,7 +88,7 @@ set hlsearch
 " status
 set statusline=#%n\ %f%m%r%h%w\ -\ [%l,\%v\ /\ %L,%{strlen(getline(\'.\'))}]%=\|%{&ff},\ %{&fileencoding},\ %Y\ 
 set laststatus=2
-set history=65536
+set history=10000
 
 " split
 set splitbelow
@@ -205,11 +205,12 @@ filetype off
 
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
+call neobundle#begin(expand('~/.vim/bundle'))
+
+NeoBundle 'Shougo/neobundle.vim.git'
+NeoBundle 'Shougo/neocomplcache.git'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -218,43 +219,46 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
-NeoBundle 'git://github.com/Shougo/vimshell.vim.git'
-NeoBundle 'git://github.com/cakebaker/scss-syntax.vim.git'
-NeoBundle 'git://github.com/dag/vim2hs.git'
-NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
-NeoBundle 'git://github.com/eagletmt/unite-haddock.git'
-NeoBundle 'git://github.com/hail2u/vim-css3-syntax.git'
-NeoBundle 'git://github.com/jelera/vim-javascript-syntax.git'
-NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
-NeoBundle 'git://github.com/jpo/vim-railscasts-theme.git'
-NeoBundle 'git://github.com/kana/vim-smartchr.git'
-NeoBundle 'git://github.com/scrooloose/nerdtree'
-NeoBundle 'git://github.com/scrooloose/syntastic'
-NeoBundle 'git://github.com/t02uk/midori'
-NeoBundle 'git://github.com/t02uk/tabdetect.git'
-NeoBundle 'git://github.com/teramako/jscomplete-vim.git'
-NeoBundle 'git://github.com/thinca/vim-quickrun.git'
-NeoBundle 'git://github.com/tpope/vim-rails.git'
-NeoBundle 'git://github.com/tpope/vim-repeat.git'
-NeoBundle 'git://github.com/tpope/vim-surround.git'
-NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
-NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
-NeoBundle 'git://github.com/vim-scripts/jQuery.git'
-NeoBundle 'git://github.com/tpope/vim-fugitive'
-NeoBundle 'git://github.com/vim-scripts/renamer.vim.git'
-NeoBundle 'git://github.com/tpope/vim-dispatch.git'
-NeoBundle 'git://github.com/thoughtbot/vim-rspec.git'
-NeoBundle 'git://github.com/othree/html5.vim.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/ujihisa/unite-locate.git'
-NeoBundle 'git://github.com/koron/codic-vim.git'
-NeoBundle 'git://github.com/rhysd/unite-codic.vim.git'
-NeoBundle 'git://github.com/vim-scripts/DirDiff.vim.git'
-NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
-NeoBundle 'git://github.com/thinca/vim-ref'
-NeoBundle 'git://github.com/taka84u9/vim-ref-ri'
-NeoBundle 'git://github.com/gregsexton/gitv.git'
+NeoBundle 'Shougo/vimshell.vim.git'
+NeoBundle 'cakebaker/scss-syntax.vim.git'
+NeoBundle 'dag/vim2hs.git'
+NeoBundle 'eagletmt/ghcmod-vim.git'
+NeoBundle 'eagletmt/unite-haddock.git'
+NeoBundle 'hail2u/vim-css3-syntax.git'
+NeoBundle 'jelera/vim-javascript-syntax.git'
+NeoBundle 'jiangmiao/simple-javascript-indenter.git'
+NeoBundle 'jpo/vim-railscasts-theme.git'
+NeoBundle 'kana/vim-smartchr.git'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 't02uk/midori'
+NeoBundle 't02uk/tabdetect.git'
+NeoBundle 'teramako/jscomplete-vim.git'
+NeoBundle 'thinca/vim-quickrun.git'
+NeoBundle 'tpope/vim-rails.git'
+NeoBundle 'tpope/vim-repeat.git'
+NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'ujihisa/neco-ghc.git'
+NeoBundle 'vim-jp/vimdoc-ja.git'
+NeoBundle 'vim-scripts/jQuery.git'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'vim-scripts/renamer.vim.git'
+NeoBundle 'tpope/vim-dispatch.git'
+NeoBundle 'thoughtbot/vim-rspec.git'
+NeoBundle 'othree/html5.vim.git'
+NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'ujihisa/unite-locate.git'
+NeoBundle 'koron/codic-vim.git'
+NeoBundle 'rhysd/unite-codic.vim.git'
+NeoBundle 'vim-scripts/DirDiff.vim.git'
+NeoBundle 'kchmck/vim-coffee-script.git'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'taka84u9/vim-ref-ri'
+NeoBundle 'gregsexton/gitv.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'vimwiki/vimwiki.git'
+
+call neobundle#end()
 
 let g:rspec_command = "Dispatch rspec {spec}"
 
@@ -304,3 +308,5 @@ au BufReadPost *
      \ if line("'\"") > 1 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
+
