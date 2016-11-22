@@ -18,6 +18,8 @@ precmd() {
 }
 PROMPT=$'%2F%n@%m%f🐱 %3F%~%f%1v \n%# '
 
+# sbt
+export SBT_OPTS="-Xms512M -Xmx2048M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxMetaspaceSize=384M -Dfile.encoding=UTF-8"
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select=1
