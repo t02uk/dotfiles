@@ -102,6 +102,9 @@ set secure
 
 " isfname (remove equal sign)
 set isfname=@,48-57,/,.,-,_,+,,,#,$,%,~
+
+" leader
+let mapleader = ' '
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " Setting for plugin
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
