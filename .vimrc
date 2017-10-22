@@ -130,7 +130,9 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 
 " quick run
-let g:quickrun_config={'*': {'split': ''}}
+let g:quickrun_config = {
+            \ '*': {'split': ''},
+            \ 'scheme': { 'command': 'gosh'}}
 
 " NERDTree
 nnoremap <C-t>t :NERDTreeToggle<CR>
