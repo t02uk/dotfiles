@@ -8,6 +8,8 @@ export PATH=/usr/local/share/npm/bin:$PATH
 
 export PATH=/usr/local/sbin:$PATH
 
+export PATH=/Users/tetsuya/Library/Android/sdk/platform-tools/:$PATH
+
 export __CF_USER_TEXT_ENCODING='0x1F5:0x08000100:14'
 
 export EDITOR=vim
