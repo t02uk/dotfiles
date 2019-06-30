@@ -56,6 +56,7 @@ set showcmd
 " backup
 set updatecount=0
 set nobackup
+set noundofile
 
 " function
 set cpo-=<
