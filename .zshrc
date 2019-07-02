@@ -44,9 +44,6 @@ alias ls='ls -G'
 alias ll='ls -Gla'
 alias rm='rm -i'
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 alias zp="tmux capture-pane -S -10000\; show-buffer | vim +10000 -Rc 'set ft=vimshell ts=8 nolist nonu' -c 'nmap q :q<cr>' -"
 
 
