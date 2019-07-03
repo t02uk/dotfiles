@@ -216,7 +216,6 @@ endif
 call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundle 'Shougo/neobundle.vim.git'
-NeoBundle 'Shougo/neocomplcache.git'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -225,48 +224,20 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
-NeoBundle 'Shougo/vimshell.vim.git'
-NeoBundle 'cakebaker/scss-syntax.vim.git'
-NeoBundle 'dag/vim2hs.git'
-NeoBundle 'eagletmt/ghcmod-vim.git'
-NeoBundle 'eagletmt/unite-haddock.git'
-NeoBundle 'hail2u/vim-css3-syntax.git'
-NeoBundle 'jelera/vim-javascript-syntax.git'
-NeoBundle 'jiangmiao/simple-javascript-indenter.git'
-NeoBundle 'jpo/vim-railscasts-theme.git'
-NeoBundle 'kana/vim-smartchr.git'
+
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/syntastic'
 NeoBundle 't02uk/midori'
 NeoBundle 't02uk/tabdetect.git'
-NeoBundle 'teramako/jscomplete-vim.git'
 NeoBundle 'thinca/vim-quickrun.git'
-NeoBundle 'tpope/vim-rails.git'
-NeoBundle 'tpope/vim-repeat.git'
 NeoBundle 'tpope/vim-surround.git'
-NeoBundle 'ujihisa/neco-ghc.git'
 NeoBundle 'vim-jp/vimdoc-ja.git'
-NeoBundle 'vim-scripts/jQuery.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-scripts/renamer.vim.git'
 NeoBundle 'tpope/vim-dispatch.git'
-NeoBundle 'thoughtbot/vim-rspec.git'
-NeoBundle 'othree/html5.vim.git'
-NeoBundle 'Shougo/unite.vim.git'
-NeoBundle 'ujihisa/unite-locate.git'
-NeoBundle 'koron/codic-vim.git'
-NeoBundle 'rhysd/unite-codic.vim.git'
-NeoBundle 'vim-scripts/DirDiff.vim.git'
-NeoBundle 'kchmck/vim-coffee-script.git'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'taka84u9/vim-ref-ri'
 NeoBundle 'gregsexton/gitv.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'vimwiki/vimwiki.git'
 
 call neobundle#end()
-
-let g:rspec_command = "Dispatch rspec {spec}"
 
 filetype plugin on
 filetype indent on
