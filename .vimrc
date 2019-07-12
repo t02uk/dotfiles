@@ -204,43 +204,70 @@ else
 endif
 
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-"" neobundle
+"" dein
 "" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-set nocompatible
-filetype off
 
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+if &compatible
+  set nocompatible
 endif
 
-call neobundle#begin(expand('~/.vim/bundle'))
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-NeoBundle 'Shougo/neobundle.vim.git'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
+
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+  call dein#add('Shougo/vimproc.vim', {
+      \ 'build': {
+      \     'windows' : 'tools\\update-dll-mingw',
+      \     'cygwin'  : 'make -f make_cygwin.mak',
+      \     'mac'     : 'make -f make_mac.mak',
+      \     'linux'   : 'make',
+      \     'unix'    : 'gmake',
       \    },
-      \ }
+      \ })
 
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 't02uk/midori'
-NeoBundle 't02uk/tabdetect.git'
-NeoBundle 'thinca/vim-quickrun.git'
-NeoBundle 'tpope/vim-surround.git'
-NeoBundle 'vim-jp/vimdoc-ja.git'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'vim-scripts/renamer.vim.git'
-NeoBundle 'tpope/vim-dispatch.git'
-NeoBundle 'gregsexton/gitv.git'
-NeoBundle 'nathanaelkane/vim-indent-guides'
+  call dein#add('Shougo/vimshell.vim.git')
+  " call dein#add('dag/vim2hs.git')
+  " call dein#add('eagletmt/ghcmod-vim.git')
+  " call dein#add('eagletmt/unite-haddock.git')
+  " call dein#add('jiangmiao/simple-javascript-indenter.git')
+  " call dein#add('jpo/vim-railscasts-theme.git')
+  " call dein#add('kana/vim-smartchr.git')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('t02uk/midori')
+  call dein#add('t02uk/tabdetect.git')
+  " call dein#add('teramako/jscomplete-vim.git')
+  call dein#add('thinca/vim-quickrun.git')
+  " call dein#add('tpope/vim-rails.git')
+  " call dein#add('tpope/vim-repeat.git')
+  call dein#add('tpope/vim-surround.git')
+  " call dein#add('ujihisa/neco-ghc.git')
+  call dein#add('vim-jp/vimdoc-ja.git')
+  " call dein#add('vim-scripts/jQuery.git')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('vim-scripts/renamer.vim.git')
+  call dein#add('tpope/vim-dispatch.git')
+  " call dein#add('thoughtbot/vim-rspec.git')
+  " call dein#add('othree/html5.vim.git')
+  " call dein#add('Shougo/unite.vim.git')
+  " call dein#add('ujihisa/unite-locate.git')
+  " call dein#add('koron/codic-vim.git')
+  " call dein#add('rhysd/unite-codic.vim.git')
+  call dein#add('vim-scripts/DirDiff.vim.git')
+  " call dein#add('kchmck/vim-coffee-script.git')
+  " call dein#add('thinca/vim-ref')
+  " call dein#add('taka84u9/vim-ref-ri')
+  call dein#add('gregsexton/gitv.git')
+  call dein#add('nathanaelkane/vim-indent-guides')
 
-call neobundle#end()
+  call dein#end()
+  call dein#save_state()
+endif
 
-filetype plugin on
-filetype indent on
+filetype plugin indent on
+syntax enable
 
 " color scheme
 colorscheme midori
