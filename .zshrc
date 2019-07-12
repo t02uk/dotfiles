@@ -24,6 +24,12 @@ export SBT_OPTS="-Xms512M -Xmx2048M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:Max
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select=1
 
+# docker
+
+fpath=(~/.zsh/completion $fpath)
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
 ## options
 setopt bash_auto_list
 setopt list_ambiguous
