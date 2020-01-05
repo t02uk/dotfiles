@@ -211,7 +211,11 @@ if &compatible
   set nocompatible
 endif
 
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+if has('mac')
+  set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+else
+  set runtimepath+=~\.cache\dein.vim\
+endif
 
 if dein#load_state('~/.cache/dein')
   call dein#begin('~/.cache/dein')
